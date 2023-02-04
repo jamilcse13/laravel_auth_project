@@ -4,6 +4,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
@@ -32,7 +33,7 @@ class AuthController extends Controller
 
         try {
             if ($validator->fails()) {
-                return response()->json(["message" => "Please provide username and password"], 404);
+                return response()->json(["message" => "Please provide correct username and password"], 404);
             }
 
             if (! $token = auth()->attempt($validator->validated())) {
@@ -49,7 +50,9 @@ class AuthController extends Controller
     /**
      * Register a User.
      *
+     * @param Request $request
      * @return JsonResponse
+     * @throws ValidationException
      */
     public function register(Request $request): JsonResponse
     {
