@@ -2,6 +2,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\CityController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,4 +28,21 @@ Route::group([
     'middleware' => ['client.verify'],
 ], function ($router) {
     Route::get('/user-profile-data', [UserController::class, 'getProfileData']);
+});
+
+Route::group(['prefix' => 'book'], function () {
+    Route::get('/', [BookController::class, 'index']);
+    Route::post('/', [BookController::class, 'store']);
+    Route::get('/{bookId}', [BookController::class, 'show']);
+    Route::put('/{bookId}', [BookController::class, 'update']);
+    Route::delete('/{bookId}', [BookController::class, 'destroy']);
+});
+
+
+Route::group(['prefix' => 'city'], function () {
+    Route::get('/', [CityController::class, 'index']);
+    Route::post('/', [CityController::class, 'store']);
+    Route::get('/{postId}', [CityController::class, 'show']);
+    Route::put('/{postId}', [CityController::class, 'update']);
+    Route::delete('/{postId}', [CityController::class, 'destroy']);
 });
