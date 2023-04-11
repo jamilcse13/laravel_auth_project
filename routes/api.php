@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ChatController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -12,6 +13,11 @@ use App\Http\Controllers\UserController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::post('/chat', [ChatController::class, 'chat']);
+Route::get('/models', [ChatController::class, 'getModels']);
+
+
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
@@ -27,3 +33,4 @@ Route::group([
 ], function ($router) {
     Route::get('/user-profile-data', [UserController::class, 'getProfileData']);
 });
+
