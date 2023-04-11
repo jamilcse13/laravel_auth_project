@@ -22,14 +22,16 @@ class ChatService {
 
     public function chat($role, $message)
     {
-        $chatting_api = 'chat/completions';
+//        $chatting_api = 'chat/completions';
+        $chatting_api = 'completions';
 
         $response = $this->client->post($this->openai_base_url . $chatting_api, [
             'headers' =>  $this->header,
             'json' => [
-                'model' => "gpt-3.5-turbo",
                 'messages' => json_encode(['role' => $role, 'content' => $message]),
-                'temperature' => 0.7,
+//                'prompt' => "Company: Reliable accountants Ltd\nProduct: Personal Tax help\nAd:Best advice in town!\nSupported:",
+                'max_tokens' => 1,
+                'model' => "text-davinci-003",
             ],
         ]);
         $result = json_decode($response->getBody()->getContents(), true);
